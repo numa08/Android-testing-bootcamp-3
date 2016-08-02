@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="event"
+            type="net.numa08.android_testing_bootcamp3.ui.viewmodels.EventRowViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="108dp"
+        android:padding="@dimen/activity_horizontal_margin"
+        >
+
+        <LinearLayout
+            android:id="@+id/date_container_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/month_text"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@{event.getMonth()}"
+                tools:text="8月"
+                />
+
+            <TextView
+                android:id="@+id/date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@{event.getDate()}"
+                tools:text="05"/>
+
+            <TextView
+                android:id="@+id/date_of_week_text"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@{event.getDateOfWeek()}"
+                tools:text="金"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/link_image"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/date_container_layout"
+            tools:ignore="ContentDescription"
+            tools:src="@mipmap/ic_launcher"/>
+        <TextView
+            android:id="@+id/started_at_text"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/link_image"
+            android:text="@{event.getStartedAt()}"
+            tools:text="19:00~"/>
+        <TextView
+            android:id="@+id/place_text"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/started_at_text"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="@{event.getPlace()}"
+            tools:text="東京都渋谷区神泉町8-16 渋谷ファーストプレイス8F"
+            />
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_toEndOf="@id/link_image"
+            android:layout_above="@id/started_at_text"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="@{event.getTitle()}"
+            tools:text="Android Testing Bootcamp #3"/>
+    </RelativeLayout>
+</layout>

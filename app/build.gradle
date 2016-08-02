@@ -1,0 +1,51 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+    defaultConfig {
+        applicationId "net.numa08.android_testing_bootcamp3"
+        minSdkVersion 18
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+def supportLibraryVersion = "24.1.1"
+def retrofitVersion = "2.1.0"
+def daggerVersion = '2.0'
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile "com.android.support:design:$supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    compile "com.android.support:customtabs:$supportLibraryVersion"
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    testCompile "com.squareup.retrofit2:retrofit-mock:$retrofitVersion"
+    compile "com.google.dagger:dagger:${daggerVersion}"
+    apt "com.google.dagger:dagger-compiler:$daggerVersion"
+    provided "javax.annotation:javax.annotation-api:1.2"
+    testCompile "org.robolectric:robolectric:3.1.2"
+    testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
+}
+
+apt {
+    arguments {
+        //noinspection GroovyAssignabilityCheck
+        androidManifestFile variant.outputs[0]?.processResources?.manifestFile
+        resourcePackageName android.defaultConfig.applicationId
+    }
+}
