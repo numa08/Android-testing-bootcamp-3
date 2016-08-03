@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -54,6 +52,7 @@
             android:layout_width="110dp"
             android:layout_height="match_parent"
             android:layout_toEndOf="@id/date_container_layout"
+            android:src="@mipmap/ic_launcher"
             tools:ignore="ContentDescription"
             tools:src="@mipmap/ic_launcher"/>
         <TextView

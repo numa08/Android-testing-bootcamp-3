@@ -21,8 +21,8 @@ public class EventListActivityViewModel implements EventListPresenter.EventListV
         this.eventListPresenter.setEventLietView(this);
     }
 
-    public void showSeriesOfEvent(long seriedId) {
-        this.eventListPresenter.showSeriesOfEvent(seriedId);
+    public void showSeriesOfEvent(long seriesID) {
+        this.eventListPresenter.showSeriesOfEvent(seriesID);
     }
 
     @Override

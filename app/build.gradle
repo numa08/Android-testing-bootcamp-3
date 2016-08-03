@@ -23,24 +23,19 @@ android {
         enabled = true
     }
 }
-def supportLibraryVersion = "24.1.1"
+def supportLibraryVersion = "24.2.0"
 def retrofitVersion = "2.1.0"
 def daggerVersion = '2.0'
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
     compile "com.android.support:design:$supportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$supportLibraryVersion"
     compile "com.android.support:customtabs:$supportLibraryVersion"
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    testCompile "com.squareup.retrofit2:retrofit-mock:$retrofitVersion"
     compile "com.google.dagger:dagger:${daggerVersion}"
     apt "com.google.dagger:dagger-compiler:$daggerVersion"
     provided "javax.annotation:javax.annotation-api:1.2"
-    testCompile "org.robolectric:robolectric:3.1.2"
-    testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
-    testCompile 'org.mockito:mockito-core:1.10.19'
 }
 
 apt {

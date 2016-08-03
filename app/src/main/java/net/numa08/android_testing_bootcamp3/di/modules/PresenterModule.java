@@ -13,7 +13,7 @@ import dagger.Provides;
 public class PresenterModule {
 
     @Provides
-    public EventListPresenter privdesEventListPresenter(ConnpassAPI connpassAPI) {
+    public EventListPresenter providesEventListPresenter(ConnpassAPI connpassAPI) {
         return new EventListPresenterImpl(connpassAPI);
     }
 
