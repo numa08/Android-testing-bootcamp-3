@@ -8,6 +8,7 @@ import net.numa08.android_testing_bootcamp3.TestApplication;
 import net.numa08.android_testing_bootcamp3.di.components.ApplicationComponents;
 import net.numa08.android_testing_bootcamp3.di.components.DaggerApplicationComponents;
 import net.numa08.android_testing_bootcamp3.di.modules.ConnpassAPIModule;
+import net.numa08.android_testing_bootcamp3.models.mapper.GsonMapper;
 import net.numa08.android_testing_bootcamp3.network.connpass.ConnpassAPI;
 import net.numa08.android_testing_bootcamp3.network.connpass.Response;
 
@@ -20,12 +21,14 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
 
 import retrofit2.Call;
-import retrofit2.http.Query;
 import retrofit2.mock.Calls;
 
 import static net.numa08.android_testing_bootcamp3.testtools.TestUtils.loadJson;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unused")
 public class EventListActivityTest {
@@ -35,28 +38,20 @@ public class EventListActivityTest {
     public static class SuccessLoadEventTest {
 
         @Before
-        public void initMockPresenter() {
+        public void initMockPresenter() throws Throwable {
+            final String json = loadJson("response.json");
+            final Gson gson = new GsonMapper().getGson();
+            final Response response = gson.fromJson(json, Response.class);
+            final Call<Response> call = Calls.response(response);
+
+            final ConnpassAPI mockAPI = mock(ConnpassAPI.class);
+            when(mockAPI.showSeriesOfEvent(anyLong())).thenReturn(call);
+            
             final ApplicationComponents components = DaggerApplicationComponents.builder()
                     .connpassAPIModule(new ConnpassAPIModule() {
                         @Override
                         public ConnpassAPI providesConnpassAPI(final Gson gson) {
-                            return new ConnpassAPI() {
-                                @Override
-                                public Call<Response> showSeriesOfEvent(@Query("series_id") long seriesId) {
-                                    try {
-                                        final String json = loadJson("response.json");
-                                        final Response response = gson.fromJson(json, Response.class);
-                                        return Calls.response(response);
-                                    } catch (Throwable throwable) {
-                                        throw new AssertionError(throwable);
-                                    }
-                                }
-
-                                @Override
-                                public Call<Response> showEvent(@Query("event_id") long eventId) {
-                                    throw new AssertionError("これが呼ばれることは無い");
-                                }
-                            };
+                            return mockAPI;
                         }
                     }).build();
             ((TestApplication) ShadowApplication.getInstance().getApplicationContext()).setApplicationComponents(components);
