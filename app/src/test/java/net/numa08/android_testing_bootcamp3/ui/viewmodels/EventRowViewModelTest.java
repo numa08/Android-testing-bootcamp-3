@@ -2,10 +2,6 @@ package net.numa08.android_testing_bootcamp3.ui.viewmodels;
 
 import android.view.LayoutInflater;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import net.numa08.android_testing_bootcamp3.databinding.ViewEventRowBinding;
 import net.numa08.android_testing_bootcamp3.models.Event;
 
@@ -14,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 
+import static net.numa08.android_testing_bootcamp3.testtools.TestObjectFactory.createEvent;
 import static net.numa08.android_testing_bootcamp3.testtools.TestUtils.loadJson;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -28,7 +25,8 @@ public class EventRowViewModelTest {
     // 確認します。
     @Test
     public void get_events_in_japan() throws Throwable {
-        final Event event = createEvent();
+        final String json = loadJson("event.json");
+        final Event event = createEvent(json);
         final ViewEventRowBinding binding = createViewEventRowBinding();
         final EventRowViewModel viewModel = new EventRowViewModel(binding);
 
@@ -47,7 +45,8 @@ public class EventRowViewModelTest {
 
     @Test
     public void bind_model_to_view() throws Throwable {
-        final Event event = createEvent();
+        final String json = loadJson("event.json");
+        final Event event = createEvent(json);
         final ViewEventRowBinding binding = createViewEventRowBinding();
         final EventRowViewModel viewModel = new EventRowViewModel(binding);
 
@@ -69,15 +68,5 @@ public class EventRowViewModelTest {
         final LayoutInflater layoutInflater = LayoutInflater.from(RuntimeEnvironment.application);
         return ViewEventRowBinding.inflate(layoutInflater, null, false);
     }
-
-    private Event createEvent() throws Throwable {
-        final String json = loadJson("event.json");
-        final Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                .create();
-        return gson.fromJson(json, Event.class);
-    }
-
 
 }
