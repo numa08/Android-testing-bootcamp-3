@@ -36,6 +36,7 @@ dependencies {
     compile "com.google.dagger:dagger:${daggerVersion}"
     apt "com.google.dagger:dagger-compiler:$daggerVersion"
     provided "javax.annotation:javax.annotation-api:1.2"
+    testCompile 'junit:junit:4.12'
 }
 
 apt {
