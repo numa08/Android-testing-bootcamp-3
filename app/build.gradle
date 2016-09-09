@@ -36,6 +36,12 @@ dependencies {
     compile "com.google.dagger:dagger:${daggerVersion}"
     apt "com.google.dagger:dagger-compiler:$daggerVersion"
     provided "javax.annotation:javax.annotation-api:1.2"
+    testCompile 'junit:junit:4.12'
+    testCompile "org.robolectric:robolectric:3.1.2"
+    // Robolectric 3.1 で View の inflate を行う際に発生するエラーを
+    // 回避するために必要
+    // https://github.com/robolectric/robolectric/issues/1932#issuecomment-219796474
+    testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
 }
 
 apt {
